@@ -34,7 +34,8 @@ PUT http://localhost:8080/v1/post/
 //удаление поста
 DELETE http://localhost:8080/v1/post/1
 ```
-
+### Prometheus
+```http://localhost:9090/targets```
 ### Grafana
 Предустановлены экспортеры и дашборды по mysql, nginx
 #### URl: http://localhost:3000, admin:admin
