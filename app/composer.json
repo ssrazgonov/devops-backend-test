@@ -1,0 +1,21 @@
+{
+    "name": "ssrazg/rest-api",
+    "description": "REST API Template with Yii2",
+    "license": "Apache-2.0",
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "authors": [
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
+        }
+    }
+}
