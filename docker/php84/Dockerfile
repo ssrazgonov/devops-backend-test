@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install intl pdo pdo_mysql \
     && docker-php-ext-enable intl
 
+COPY ./php.ini /usr/local/etc/php/php.ini
+
 RUN usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer

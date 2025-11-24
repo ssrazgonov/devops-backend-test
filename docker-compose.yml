@@ -3,13 +3,14 @@ services:
     build:
       context: ./docker/php84
       args:
-        USER_ID: 1000
-        GROUP_ID: 1000
+        USER_ID: ${USER_ID}
+        GROUP_ID: ${GROUP_ID}
     container_name: app
     volumes:
       - ./app:/var/www/html
     depends_on:
       - db
+    command: php-fpm
   nginx:
     image: nginx:alpine
     ports:
@@ -22,12 +23,12 @@ services:
   db:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: yii2
-      MYSQL_USER: yii2
-      MYSQL_PASSWORD: yii2
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "33061:3306"
+      - "${MYSQL_CLIENT_PORT}:3306"
     volumes:
       - db_data:/var/lib/mysql
   nginx-exporter:
@@ -43,10 +44,12 @@ services:
     image: prom/mysqld-exporter:latest
     container_name: mysqld-exporter
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQLD_EXPORTER_DATA_SOURCE_NAME: "root:root@(db:3306)/"
+      DATA_SOURCE_NAME: "root:root@(db:3306)/"
     ports:
       - "9104:9104"
+    command:
+     - "--mysqld.username=root:root"
+     - "--mysqld.address=db:3306"
     depends_on:
       - db
   prometheus:
